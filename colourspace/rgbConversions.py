@@ -2,22 +2,29 @@ import numpy as np
 import cv2
 
 
-def rgb2grays(input_image):
+def rgb2grays(input_image, alg='opencv'):
     # converts an RGB into grayscale by using 4 different methods
 
     # ligtness method
+    if alg == 'lightness':
+        height, width, _ = input_image.shape
+        new_image = np.zeros((height, width))
+        for x in range(height):
+            for y in range(width):
+                rgb_pixel = input_image[x][y]
+                # print(rgb_pixel)
+                new_image[x][y] = (np.max(rgb_pixel) + np.min(rgb_pixel))/2
 
     # average method
-    for x in range(input_image.shape[0]):
-        for y in range(input_image.shape[1]):
-            input_image[x][y] = np.sum(input_image[x][y]) / 3
-    # print(new_image.shape, input_image.shape)
-    print(input_image)
-    return input_image
+    if alg == 'average':
+        pass
 
     # luminosity method
-
-    # built-in opencv function 
+    if alg == 'luminosity':
+        pass
+    # built-in opencv function
+    if alg == 'opencv':
+        new_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2GRAY)
 
     return new_image
 

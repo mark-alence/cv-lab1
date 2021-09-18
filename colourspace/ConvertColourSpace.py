@@ -4,6 +4,7 @@ from visualize import *
 import cv2
 import matplotlib.pyplot as plt
 
+
 def ConvertColourSpace(input_image, colourspace):
     '''
     Converts an RGB image into a specified color space, visualizes the
@@ -28,6 +29,7 @@ def ConvertColourSpace(input_image, colourspace):
 
     elif colourspace.lower() == 'rgb':
         new_image = rgbConversions.rgb2normedrgb(input_image)
+        print(new_image.shape)
 
     elif colourspace.lower() == 'hsv':
         new_image = cv2.cvtColor(input_image, cv2.COLOR_RGB2HSV)
@@ -38,7 +40,11 @@ def ConvertColourSpace(input_image, colourspace):
 
     elif colourspace.lower() == 'gray':
         # fill in the rgb2opponent function
-        new_image = rgbConversions.rgb2grays(input_image)
+        new_image = rgbConversions.rgb2grays(input_image, alg='lightness')
+        print(new_image[0][0])
+        print(new_image.shape)
+        # print('opencv')
+        # new_image = rgbConversions.rgb2grays(input_image, alg='opencv')
 
     else:
         print('Error: Unknown colorspace type [%s]...' % colourspace)
@@ -58,4 +64,4 @@ if __name__ == '__main__':
     # This is a shorthand.
     I = I[:, :, ::-1]
     plt.show()
-    out_img = ConvertColourSpace(I, 'rgb')
+    out_img = ConvertColourSpace(I, 'hsv')
