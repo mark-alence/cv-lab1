@@ -4,7 +4,6 @@ from visualize import *
 import cv2
 import matplotlib.pyplot as plt
 
-
 def ConvertColourSpace(input_image, colourspace):
     '''
     Converts an RGB image into a specified color space, visualizes the
@@ -59,4 +58,4 @@ if __name__ == '__main__':
     # This is a shorthand.
     I = I[:, :, ::-1]
     plt.show()
-    out_img = ConvertColourSpace(I, 'ycbcr')
+    out_img = ConvertColourSpace(I, 'rgb')

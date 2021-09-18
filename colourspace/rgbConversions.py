@@ -8,6 +8,12 @@ def rgb2grays(input_image):
     # ligtness method
 
     # average method
+    for x in range(input_image.shape[0]):
+        for y in range(input_image.shape[1]):
+            input_image[x][y] = np.sum(input_image[x][y]) / 3
+    # print(new_image.shape, input_image.shape)
+    print(input_image)
+    return input_image
 
     # luminosity method
 

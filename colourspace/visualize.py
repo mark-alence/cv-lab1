@@ -7,7 +7,7 @@ def visualize(input_image):
     # Fill in this function. Remember to remove the pass command
 
     plt.figure()  # new figure to plot
-    plt.imshow(input_image.astype(np.uint8))
+    plt.imshow(input_image)
     plt.show()
 
     plt.figure()  # new figure to plot
