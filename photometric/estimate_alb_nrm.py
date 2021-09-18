@@ -54,6 +54,8 @@ def estimate_alb_nrm(image_stack, scriptV, shadow_trick=True):
 if __name__ == '__main__':
     n = 5
     paths = os.listdir("photometrics_images/SphereGray5")
+    directions = [path.split('_') for path in paths]
+
     images = [cv2.imread(f"photometrics_images/SphereGray5/{path}", cv2.IMREAD_GRAYSCALE) for path in paths]
     # image_stack = np.zeros([10, 10, n])
     image_stack = np.stack(images, axis=2)
