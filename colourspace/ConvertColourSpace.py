@@ -29,7 +29,6 @@ def ConvertColourSpace(input_image, colourspace):
 
     elif colourspace.lower() == 'rgb':
         new_image = rgbConversions.rgb2normedrgb(input_image)
-        print(new_image.shape)
 
     elif colourspace.lower() == 'hsv':
         new_image = cv2.cvtColor(input_image, cv2.COLOR_RGB2HSV)
@@ -39,12 +38,7 @@ def ConvertColourSpace(input_image, colourspace):
         new_image[:, [1, 2]] = new_image[:, [2, 1]]
 
     elif colourspace.lower() == 'gray':
-        # fill in the rgb2opponent function
-        new_image = rgbConversions.rgb2grays(input_image, alg='lightness')
-        print(new_image[0][0])
-        print(new_image.shape)
-        # print('opencv')
-        # new_image = rgbConversions.rgb2grays(input_image, alg='opencv')
+        new_image = rgbConversions.rgb2grays(input_image, alg='lightness')       
 
     else:
         print('Error: Unknown colorspace type [%s]...' % colourspace)

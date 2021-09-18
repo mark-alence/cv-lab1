@@ -22,6 +22,7 @@ def rgb2grays(input_image, alg='opencv'):
     # luminosity method
     if alg == 'luminosity':
         pass
+        
     # built-in opencv function
     if alg == 'opencv':
         new_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2GRAY)
