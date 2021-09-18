@@ -59,4 +59,4 @@ if __name__ == '__main__':
     # This is a shorthand.
     I = I[:, :, ::-1]
     plt.show()
-    out_img = ConvertColourSpace(I, 'ycbcr')
+    out_img = ConvertColourSpace(I, 'opponent')

@@ -2,6 +2,16 @@ import numpy as np
 import cv2
 
 
+def luminosity(input_image):
+    for x in range(len(input_image)):
+        for y in range(len(input_image[x])):
+            r = input_image[x][y][0]
+            g = input_image[x][y][1]
+            b = input_image[x][y][2]
+            input_image[x][y] = 0.21 * r + 0.72 * g + 0.07 * b
+    return input_image
+
+
 def rgb2grays(input_image):
     # converts an RGB into grayscale by using 4 different methods
 
@@ -13,7 +23,7 @@ def rgb2grays(input_image):
 
     # built-in opencv function 
 
-    return new_image
+    return luminosity(input_image)
 
 
 def rgb2opponent(input_image):
