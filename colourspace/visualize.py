@@ -6,7 +6,7 @@ import cv2
 def visualize(input_image):
 
     plt.figure()  # new figure to plot
-    plt.imshow(input_image.astype(np.uint8))
+    plt.imshow(input_image)
     plt.show()
 
     plt.figure()
