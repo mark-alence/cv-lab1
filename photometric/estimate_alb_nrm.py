@@ -52,20 +52,4 @@ def estimate_alb_nrm(image_stack, scriptV, shadow_trick=False):
     """
     return albedo, normal
 
-# if __name__ == '__main__':
-# n = 5
-# paths = os.listdir("photometrics_images/SphereGray5")
-# scriptV = [re.split('_|\.png', path)[1:3] for path in paths]
-# scriptV = [[*[float(x) for x in arr], 1] for arr in scriptV]
-# scriptV = np.array([x / np.linalg.norm(x) for x in scriptV])
-# images = [cv2.imread(f"photometrics_images/SphereGray5/{path}", cv2.IMREAD_GRAYSCALE) for path in paths]
-# image_stack = np.stack(images, axis=2)
-# h, w, n = image_stack.shape
-# [a, n] = estimate_alb_nrm(image_stack, scriptV, shadow_trick=True)
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
-# x = n[:, :, 0].reshape(h * w)
-# y = n[:, :, 1].reshape(h * w)
-# z = n[:, :, 2].reshape(h * w)
-# ax.scatter(x, y, z, c=a, cmap='gray')
-# plt.show()
+
