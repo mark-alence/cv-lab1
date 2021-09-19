@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 import os
@@ -58,6 +59,30 @@ def photometric_stereo_face(image_dir='./yaleB02/'):
     show_results(albedo, normals, height_map, SE)
 
 
+def photometric_stereo2(num, image_dir='photometrics_images/SphereGray25/'):
+    # obtain many images in a fixed view under different illumination
+    print('Loading images...\n')
+    [image_stack, scriptV] = load_syn_images2(num, image_dir)
+    [h, w, n] = image_stack.shape
+    print('Finish loading %d images.\n' % n)
+
+    # compute the surface gradient from the stack of imgs and light source mat
+    print('Computing surface albedo and normal map...\n')
+    [albedo, normals] = estimate_alb_nrm(image_stack, scriptV)
+
+    # integrability check: is (dp / dy  -  dq / dx) ^ 2 small everywhere?
+    print('Integrability checking\n')
+    [p, q, SE] = check_integrability(normals)
+
+    threshold = 0.005;
+    print('Number of outliers: %d\n' % np.sum(SE > threshold))
+    # SE[SE <= threshold] = float('nan')  # for good visualization
+
+    # compute the surface height
+    height_map = construct_surface(p, q)
+
+    # show results
+
+
 if __name__ == '__main__':
-    photometric_stereo('photometrics_images/SphereGray25/')
-    # photometric_stereo_face('photometrics_images/yaleB02/')
+    photometric_stereo_face('photometrics_images/yaleB02/')

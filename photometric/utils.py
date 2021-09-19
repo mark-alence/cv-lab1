@@ -6,8 +6,47 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def load_syn_images(image_dir='photometrics_images/SphereGray5/', channel=0):
+def load_syn_images(image_dir='./SphereGray5/', channel=0):
     files = os.listdir(image_dir)
+    # files = [os.path.join(image_dir, f) for f in files]
+    nfiles = len(files)
+
+    image_stack = None
+    V = 0
+    Z = 0.5
+
+    for i in range(nfiles):
+        # read input image
+        im = cv2.imread(os.path.join(image_dir, files[i]))
+        im = im[:, :, channel]
+
+        # stack at third dimension
+        if image_stack is None:
+            h, w = im.shape
+            print('Image size (H*W): %d*%d' % (h, w))
+            image_stack = np.zeros([h, w, nfiles], dtype=int)
+            V = np.zeros([nfiles, 3], dtype=np.float64)
+
+        image_stack[:, :, i] = im
+
+        # read light direction from image name
+        X = np.double(files[i][(files[i].find('_') + 1):files[i].rfind('_')])
+        Y = np.double(files[i][files[i].rfind('_') + 1:files[i].rfind('.png')])
+        V[i, :] = [-X, Y, Z]
+
+    # normalization
+    image_stack = np.double(image_stack)
+    min_val = np.min(image_stack)
+    max_val = np.max(image_stack)
+    image_stack = (image_stack - min_val) / (max_val - min_val)
+    normV = np.tile(np.sqrt(np.sum(V ** 2, axis=1, keepdims=True)), (1, V.shape[1]))
+    scriptV = V / normV
+
+    return image_stack, scriptV
+
+
+def load_syn_images2(num, image_dir='./SphereGray5/', channel=0):
+    files = os.listdir(image_dir)[1:num + 1]
     # files = [os.path.join(image_dir, f) for f in files]
     nfiles = len(files)
 
@@ -126,5 +165,6 @@ def show_results(albedo, normals, height_map, SE):
     H = height_map[::stride, ::stride]
     fig = plt.figure()
     ax = fig.gca(projection='3d')
+    ax.view_init(elev=90, azim = 10)
     ax.plot_surface(X, Y, H.T)
     plt.show()

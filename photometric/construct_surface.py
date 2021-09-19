@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def construct_surface(p, q, path_type='row'):
+def construct_surface(p, q, path_type='column'):
     '''
     CONSTRUCT_SURFACE construct the surface function represented as height_map
        p : measures value of df / dx
