@@ -33,18 +33,22 @@ def ConvertColourSpace(input_image, colourspace):
     elif colourspace.lower() == 'hsv':
         new_image = cv2.cvtColor(input_image, cv2.COLOR_RGB2HSV)
 
-    elif colourspace.lower() == 'ycbcr':
+    elif colourspace.lower() == 'ycrcb':
         new_image = cv2.cvtColor(input_image, cv2.COLOR_RGB2YCrCb)
-        new_image[:, [1, 2]] = new_image[:, [2, 1]]
 
     elif colourspace.lower() == 'gray':
-        new_image = rgbConversions.rgb2grays(input_image, alg='lightness')       
+        lightness_image = rgbConversions.rgb2grays(input_image, alg='lightness')
+        average_image = rgbConversions.rgb2grays(input_image, alg='average')
+        luminosity_image = rgbConversions.rgb2grays(input_image, alg='luminosity')
+        opencv_image = rgbConversions.rgb2grays(input_image, alg='opencv')
+        visualize_gray(lightness_image, average_image, luminosity_image, opencv_image)
 
     else:
         print('Error: Unknown colorspace type [%s]...' % colourspace)
         new_image = input_image
 
-    visualize(new_image)
+    if not colourspace.lower() == 'gray':
+        visualize(new_image, normalize=True)
 
     return new_image
 
@@ -57,5 +61,4 @@ if __name__ == '__main__':
     # Convert from BGR to RGB
     # This is a shorthand.
     I = I[:, :, ::-1]
-    plt.show()
-    out_img = ConvertColourSpace(I, 'hsv')
+    out_img = ConvertColourSpace(I, 'ycrcb')
