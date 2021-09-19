@@ -8,9 +8,9 @@ def reconstruct_image(img_albedo: np.ndarray, img_shading:  np.ndarray) -> np.nd
     return reconstructed_img
 
 def main():
-    ball_albedo_img = cv2.cvtColor(cv2.imread('ball_albedo.png'), cv2.COLOR_BGR2RGB)
-    ball_shading_img = cv2.cvtColor(cv2.imread('ball_shading.png'), cv2.COLOR_BGR2RGB)
-    ball_original_img = cv2.cvtColor(cv2.imread('ball.png'), cv2.COLOR_BGR2RGB)
+    ball_albedo_img = cv2.imread('ball_albedo.png')[:, :, ::-1]
+    ball_shading_img = cv2.imread('ball_shading.png')[:, :, ::-1]
+    ball_original_img = cv2.imread('ball.png')[:, :, ::-1]
 
     ball_reconstructed_img = reconstruct_image(ball_albedo_img, ball_shading_img)
     # print(ball_reconstructed_img.shape)
